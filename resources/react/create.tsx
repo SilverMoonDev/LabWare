@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom/client';
-import Main from "./components/Main";
 import React from 'react';
+import { Create } from './components/Create';
 import './styles/index.css';
 
-const appElement = document.getElementById('app');
+const appElement = document.getElementById('create');
 if (appElement) {
   ReactDOM.createRoot(appElement).render(
-    <Main />
+    <Create />
   );
 }
