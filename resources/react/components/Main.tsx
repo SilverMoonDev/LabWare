@@ -1,36 +1,37 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import '../styles/components/main.css'
 import { LateralMenu } from './LateralMenu';
+import { ItemInfo } from './ItemInfo';
 
 interface Product {
   name: string;
   expire_date: string;
+  quantitat: number;
+  numCas: string;
 }
 
 const Main: React.FC = () => {
   const [productList, setProductList] = useState<Product[]>([]);
-  const [color, setColor] = useState<boolean>(false);
   const [sortedList, setSortedList] = useState<{ property: string; descending: boolean }>({ property: '', descending: false });
   const [filteredList, setFilteredList] = useState<string>('');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [popupOpen, setPopupOpen] = useState(false);
+
 
   useEffect(() => {
     // Simulating fetching of product data from an API
     const fetchProducts = async () => {
       // Mocked product data
       const products = [
-        { name: 'Product 1', expire_date: "2024-04-15" },
-        { name: 'Product 2', expire_date: "2024-04-14" },
-        { name: 'Product 3', expire_date: "2024-04-16" },
-        { name: 'Product 4', expire_date: "2024-04-13" },
+        { name: 'Product 1', expire_date: "2024-04-15", quantitat: 100, numCas: "64-19-7" },
+        { name: 'Product 2', expire_date: "2024-04-14", quantitat: 400, numCas: "65-19-7" },
+        { name: 'Product 3', expire_date: "2024-04-16", quantitat: 500, numCas: "66-19-7" },
+        { name: 'Product 4', expire_date: "2024-04-13", quantitat: 200, numCas: "67-19-7" },
       ];
       setProductList(products);
     };
     fetchProducts();
   }, []);
-
-  const handleColor = () => {
-    setColor(!color);
-  };
 
   const columns = [
     { label: 'Name', property: 'name' },
@@ -94,13 +95,18 @@ const Main: React.FC = () => {
     return filteredProducts;
   }, [filteredList, handleSorting]);
 
+  const openPopup = (product: Product) => {
+    setSelectedProduct(product);
+    setPopupOpen(true);
+  };
+  
+
   return (
     <div className='main-section'>
       <div className='lateral-menu'><LateralMenu /></div>
       <section className='product-container'>
         <header>
           <div className='header-controls'>
-            <button onClick={handleColor}>Color rows</button>
             <button onClick={() => sortByColumn('name')}>
               {sortedList.property === 'name' ? (sortedList.descending ? 'Sort by name (Descending)' : 'Sort by name') : 'Sort by name'}
             </button>
@@ -112,26 +118,22 @@ const Main: React.FC = () => {
         </header>
         <div className='product-body'>
           {productList && (
-            <div className='product-table'>
-              <div className='product-row'>
-                {filteredProducts.map((product, index) => (
-                  <div key={index} className='product-item' style={{ backgroundColor: color ? index % 2 === 0 ? '#4F4A49' : '#9D9593' : 'transparent' }}>
-                    {columns.map((col, colIndex) => (
-                      <div key={colIndex} className='product-column'>
-                        <div className='product-label'>{col.label}:</div>
-                        <div className='product-value'>{col.property === 'expire_date' ? new Date(product[col.property]).toLocaleDateString() : product[col.property]}</div>
-                      </div>
-                    ))}
-                    <div className='product-action'>
-                      <button onClick={() => handleDelete(product.name)}>Delete</button>
+            <div className='product-row'>
+              {filteredProducts.map((product, index) => (
+                <div key={index} className='product-item' onClick={() => openPopup(product)}>
+                  {columns.map((col, colIndex) => (
+                    <div key={colIndex} className='product-column'>
+                      <div className='product-label'>{col.label}:</div>
+                      <div className='product-value'>{col.property === 'expire_date' ? new Date(product[col.property]).toLocaleDateString() : product[col.property]}</div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ))}
             </div>
           )}
         </div>
       </section>
+      {popupOpen && <ItemInfo product={selectedProduct} onClose={() => setPopupOpen(false)} handleDelete={handleDelete} />}
     </div>
   );
 
