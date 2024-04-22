@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return view('welcome', [
+    return Inertia::render('Main', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -15,11 +15,11 @@ Route::get('/', function () {
 });
 
 Route::get('/create', function () {
-    return view('create');
+    return Inertia::render('Create');
 });
 
 Route::get('/update', function () {
-    return view('update');
+    return Inertia::render('Update');
 });
 
 Route::get('/dashboard', function () {

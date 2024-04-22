@@ -1,13 +1,7 @@
 import React from "react"
-import '../styles/components/info.css'
+import '../../styles/components/info.css'
 
-interface Product {
-    name: string;
-    expire_date: string;
-    quantitat: number;
-    numCas: string;
-}
-export const ItemInfo: React.FC<{ product: Product | null; onClose: () => void; handleDelete: (name)=> void }> = ({ product, onClose, handleDelete }) => {
+export const ItemInfo = ({ product, onClose, handleDelete }) => {
     if (!product) return null;
 
     return (

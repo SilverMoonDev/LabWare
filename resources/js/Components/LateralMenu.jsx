@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import '../styles/components/lateralMenu.css'
+import '../../styles/components/lateralMenu.css'
 
 
 export const LateralMenu = () => {

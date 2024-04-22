@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import React from 'react';
-import { Update } from './components/Update';
+import { Update } from '../js/Pages/Update';
 import './bootstrap';
 import './styles/app.css';
 

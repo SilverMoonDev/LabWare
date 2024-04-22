@@ -1,20 +1,16 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import '../styles/components/main.css'
-import { LateralMenu } from './LateralMenu';
-import { ItemInfo } from './ItemInfo';
+import '../../styles/components/main.css'
+import { LateralMenu } from '../Components/LateralMenu';
+import { ItemInfo } from '../Components/ItemInfo';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import TextInput from '@/Components/TextInput';
 
-interface Product {
-  name: string;
-  expire_date: string;
-  quantitat: number;
-  numCas: string;
-}
 
-const Main: React.FC = () => {
-  const [productList, setProductList] = useState<Product[]>([]);
-  const [sortedList, setSortedList] = useState<{ property: string; descending: boolean }>({ property: '', descending: false });
-  const [filteredList, setFilteredList] = useState<string>('');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+const Main = ({ auth }) => {
+  const [productList, setProductList] = useState([]);
+  const [sortedList, setSortedList] = useState({ property: '', descending: false });
+  const [filteredList, setFilteredList] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
 
 
@@ -95,13 +91,17 @@ const Main: React.FC = () => {
     return filteredProducts;
   }, [filteredList, handleSorting]);
 
-  const openPopup = (product: Product) => {
+  const openPopup = (product) => {
     setSelectedProduct(product);
     setPopupOpen(true);
   };
   
 
   return (
+    <AuthenticatedLayout
+            user={auth.user}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+        >
     <div className='main-section'>
       <div className='lateral-menu'><LateralMenu /></div>
       <section className='product-container'>
@@ -113,7 +113,7 @@ const Main: React.FC = () => {
             <button onClick={() => sortByColumn('expire_date')}>
               {sortedList.property === 'expire_date' ? (sortedList.descending ? 'Sort by expire date (Descending)' : 'Sort by expire date') : 'Sort by expire date'}
             </button>
-            <input type="text" placeholder="Filter List" value={filteredList} onChange={e => setFilteredList(e.target.value)} />
+            <TextInput type="text" placeholder="Filter List" value={filteredList} onChange={e => setFilteredList(e.target.value)} />
           </div>
         </header>
         <div className='product-body'>
@@ -135,6 +135,7 @@ const Main: React.FC = () => {
       </section>
       {popupOpen && <ItemInfo product={selectedProduct} onClose={() => setPopupOpen(false)} handleDelete={handleDelete} />}
     </div>
+    </AuthenticatedLayout>
   );
 
 };
