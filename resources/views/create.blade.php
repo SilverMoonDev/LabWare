@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     @viteReactRefresh
-    @vite('resources/react/create.tsx')
+    @vite('resources/react/create.jsx')
 </head>
 <body>
 <div id="create"></div>
