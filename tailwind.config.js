@@ -15,8 +15,13 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+
+            colors: {
+                customBg: 'rgb(44, 42, 42)',
+              },
         },
     },
 
     plugins: [forms],
+    
 };
