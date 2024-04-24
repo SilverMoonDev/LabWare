@@ -9,9 +9,6 @@ export const LateralMenu = () => {
     return (
         <div className="lateral-menu">
             <ul>
-                <li>
-                    <a href="/create">Create</a>
-                </li>
                 <li
                     onMouseEnter={() => setShowArmaris(true)}
                     onMouseLeave={() => setShowArmaris(false)}
