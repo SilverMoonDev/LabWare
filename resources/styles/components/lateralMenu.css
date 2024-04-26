@@ -1,26 +1,42 @@
 .lateral-menu {
-  display: flex;
-  width: 10rem;
-  background-color: #333;
-  color: white;
-  padding: 20px;
+    display: flex;
+    width: 10rem;
+    color: white;
+    padding: 20px;
+    background-color: rgb(46, 44, 44);
+    height: 100vh;
 }
 
 .lateral-menu ul {
-  list-style: none;
-  padding: 0;
+    list-style: none;
+    padding: 0; 
 }
 
 .lateral-menu li {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .lateral-menu a {
-  text-decoration: none;
-  color: white;
-  cursor: pointer;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
 }
 
-.lateral-menu a:hover {
-  color: #48BB78;
+.armari {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: -20px;
+    margin-bottom: 10px;
 }
+
+.armaris {
+  border-bottom: 1px solid #48bb78; 
+  padding-bottom: 5px; 
+  display: block;
+}
+
+.lateral-menu a:hover { 
+    color: #48bb78 !important;
+}
+

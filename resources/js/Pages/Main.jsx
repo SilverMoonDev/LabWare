@@ -95,46 +95,45 @@ const Main = ({ auth }) => {
     setSelectedProduct(product);
     setPopupOpen(true);
   };
-  
+
 
   return (
     <AuthenticatedLayout
-            user={auth.user}
-            header={<h2 className="font-semibold text-xl text-white leading-tight">Home</h2>}
-        >
-    <div className='main-section'>
-      <div className='lateral-menu'><LateralMenu /></div>
-      <section className='product-container'>
-        <header>
-          <div className='header-controls'>
-            <button onClick={() => sortByColumn('name')}>
-              {sortedList.property === 'name' ? (sortedList.descending ? 'Sort by name (Descending)' : 'Sort by name') : 'Sort by name'}
-            </button>
-            <button onClick={() => sortByColumn('expire_date')}>
-              {sortedList.property === 'expire_date' ? (sortedList.descending ? 'Sort by expire date (Descending)' : 'Sort by expire date') : 'Sort by expire date'}
-            </button>
-            <TextInput type="text" placeholder="Filter List" value={filteredList} onChange={e => setFilteredList(e.target.value)} />
-          </div>
-        </header>
-        <div className='product-body'>
-          {productList && (
-            <div className='product-row'>
-              {filteredProducts.map((product, index) => (
-                <div key={index} className='product-item' onClick={() => openPopup(product)}>
-                  {columns.map((col, colIndex) => (
-                    <div key={colIndex} className='product-column'>
-                      <div className='product-label'>{col.label}:</div>
-                      <div className='product-value'>{col.property === 'expire_date' ? new Date(product[col.property]).toLocaleDateString() : product[col.property]}</div>
-                    </div>
-                  ))}
-                </div>
-              ))}
+      user={auth.user}
+      header={<h2 className="font-semibold text-xl text-white leading-tight">Home</h2>}
+    >
+      <div className='main-section'>
+        <div className='lateral-menu'><LateralMenu /></div>
+        <section className='product-container'>
+          <header>
+            <div className='header-controls'>
+              <button onClick={() => sortByColumn('name')}>
+                {sortedList.property === 'name' ? (sortedList.descending ? 'Sort by name (Descending)' : 'Sort by name') : 'Sort by name'}
+              </button>
+              <button onClick={() => sortByColumn('expire_date')}>
+                {sortedList.property === 'expire_date' ? (sortedList.descending ? 'Sort by expire date (Descending)' : 'Sort by expire date') : 'Sort by expire date'}
+              </button>
+              <TextInput type="text" placeholder="Filter List" value={filteredList} onChange={e => setFilteredList(e.target.value)} />
             </div>
-          )}
-        </div>
-      </section>
-      {popupOpen && <ItemInfo product={selectedProduct} onClose={() => setPopupOpen(false)} handleDelete={handleDelete} />}
-    </div>
+          </header>
+          <div className='product-body'>
+            {productList && (
+              <div className='product-row'>
+                {filteredProducts.map((product, index) => (
+                  <div key={index} className='product-item' onClick={() => openPopup(product)}
+                    onMouseEnter={(e) => e.currentTarget.classList.add('zoom-in')}
+                    onMouseLeave={(e) => e.currentTarget.classList.remove('zoom-in')}>
+                    <div className='product-column'>
+                      <div className='product-value'>{product.name}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+        {popupOpen && <ItemInfo product={selectedProduct} onClose={() => setPopupOpen(false)} handleDelete={handleDelete} />}
+      </div>
     </AuthenticatedLayout>
   );
 

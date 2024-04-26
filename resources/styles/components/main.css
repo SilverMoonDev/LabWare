@@ -1,5 +1,6 @@
 .main-section {
   display: flex;
+  height: 100vh;
 }
 
 
@@ -10,10 +11,10 @@
 }
 
 .header-controls {
-  display: flex;
+  display: grid;
   color: white;
   padding: 10px;
-  justify-content: center;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
 }
 
@@ -27,13 +28,15 @@ button {
   font-weight: bold;
   font-size: medium;
   margin: 0 5px;
+  margin-bottom: 20px;
 }
 
 input {
   padding: 5px;
   margin: 0 5px;
-  background-color: rgb(44, 42, 42);
-  color: white;
+  background-color: rgb(42, 44, 42);
+  color: rgb(0, 0, 0);
+  margin-bottom: 20px;
 }
 
 .product-body {
@@ -46,26 +49,35 @@ input {
   padding: 20px;
   gap: 40px;
 }
-
+  
 .product-item {
   width: calc(25% - 10px);
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 5px;
-  border: 1px solid rgb(22, 21, 21);
+  border: 1px solid rgb(93, 92, 92);
   width: 100%;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1); 
 }
+
+.product-item.zoom-in {
+  transform: scale(1.1);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
+}
+
 
 .product-column {
   margin-bottom: 5px;
 }
 
-.product-label {
-  font-weight: bold;
-}
-
 .product-action {
   margin-top: 10px;
+}
+
+.product-value{
+  text-align: center;
 }
 
 .product-action button {
@@ -101,15 +113,24 @@ input {
     gap: 40px;
   }
 
+  .header-controls{
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+  }
+
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
 
   .product-row {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     padding: 20px;
     gap: 40px;
+  }
+
+  .header-controls{
+    grid-template-columns: repeat(1, 1fr);
   }
 
 }
