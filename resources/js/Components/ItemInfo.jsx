@@ -17,7 +17,6 @@ export const ItemInfo = ({ product, onClose, handleDelete }) => {
               <p>Expire Date: {product.expire_date}</p>
               <a href="/update"><button >Update</button></a>
               <button onClick={() => { handleDelete(product.name); onClose(); }}>Delete</button>
-             
             </div>
           </div>
         </>
