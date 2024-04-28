@@ -4,6 +4,8 @@ import { LateralMenu } from '../Components/LateralMenu';
 import { ItemInfo } from '../Components/ItemInfo';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import TextInput from '@/Components/TextInput';
+import { ArrowRightIcon } from '@/Icons/ArrowRightIcon';
+import { ArrowLeftIcon } from '@/Icons/ArrowBackIcon';
 
 
 const Main = ({ auth }) => {
@@ -136,11 +138,11 @@ const Main = ({ auth }) => {
         <section className='product-container'>
           <header>
             <div className='header-controls'>
-              <button onClick={() => sortByColumn('name')}>
-                {sortedList.property === 'name' ? (sortedList.descending ? 'Sort by name (Descending)' : 'Sort by name') : 'Sort by name'}
+              <button onClick={() => sortByColumn('name')} style={{ color: sortedList.property === 'name' ? (sortedList.descending ? "#ffffff" : "#48bb78") : "#ffffff" }}>
+              {sortedList.property === 'name' ? (sortedList.descending ? 'Sort by name (A)' : 'Sort by name (D)' ) : 'Sort by name (A)'}
               </button>
-              <button onClick={() => sortByColumn('expire_date')}>
-                {sortedList.property === 'expire_date' ? (sortedList.descending ? 'Sort by expire date (Descending)' : 'Sort by expire date') : 'Sort by expire date'}
+              <button onClick={() => sortByColumn('expire_date')} style={{ color: sortedList.property === 'expire_date' ? (sortedList.descending ? "#ffffff" : "#48bb78") : "#ffffff" }}>
+              {sortedList.property === 'expire_date' ? (sortedList.descending ? 'Sort by expire date (A)' : 'Sort by expire date (D)') : 'Sort by expire date (A)'}
               </button>
               <TextInput type="text" placeholder="Filter List" value={filteredList} onChange={e => setFilteredList(e.target.value)} />
             </div>
@@ -161,9 +163,9 @@ const Main = ({ auth }) => {
             )}
           </div>
           <div className="pagination">
-            <button onClick={goToPreviousPage} disabled={currentPage === 1}>Previous</button>
+            <button onClick={goToPreviousPage} disabled={currentPage === 1} className="pagination-button"><ArrowLeftIcon /></button>
             <span>{currentPage}</span>
-            <button onClick={goToNextPage} disabled={currentPage === Math.ceil(filteredProducts.length / productsPerPage)}>Next</button>
+            <button onClick={goToNextPage} disabled={currentPage === Math.ceil(filteredProducts.length / productsPerPage)} className="pagination-button"><ArrowRightIcon /></button>
           </div>
         </section>
         {popupOpen && <ItemInfo product={selectedProduct} onClose={() => setPopupOpen(false)} handleDelete={handleDelete} />}

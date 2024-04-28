@@ -25,8 +25,8 @@ const Create = ({ auth, status }) => {
           user={auth.user}
           header={<h2 className="font-semibold text-xl text-white leading-tight">Create</h2>}
         >            
-          <div className="max-w-md mx-auto">
-            <h2 className="text-2xl font-semibold text-white mb-4">Create</h2>
+          <div className="max-w-md mx-auto mt-6">
+            <h2 className="text-2xl font-semibold text-white mb-4 text-center">Create</h2>
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
             <form onSubmit={submit}>
               <div className="mb-4">

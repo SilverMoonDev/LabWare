@@ -105,10 +105,10 @@ export default function Authenticated({ user, header, children }) {
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="pt-4 pb-1 border-t border-gray-200">
+                    <div className="pt-4 pb-1 border-t border-green-600">
                         <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
+                            <div className="font-medium text-base text-white">{user.name}</div>
+                            <div className="font-medium text-sm text-white">{user.email}</div>
                         </div>
 
                         <div className="mt-3 space-y-1">
