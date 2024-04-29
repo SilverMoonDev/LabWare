@@ -1,136 +1,143 @@
 .main-section {
-  display: flex;
-  height: 100vh;
+    display: flex;
 }
 
-
 .product-container {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .header-controls {
-  display: grid;
-  color: white;
-  padding: 10px;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
+    display: grid;
+    color: white;
+    padding: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
 }
 
 button {
-  background-color: rgb(22, 21, 21);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: medium;
-  margin: 0 5px;
-  margin-bottom: 20px;
+    background-color: rgb(22, 21, 21);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: medium;
+    margin: 0 5px;
+    margin-bottom: 20px;
 }
 
 input {
-  padding: 5px;
-  margin: 0 5px;
-  background-color: rgb(42, 44, 42);
-  color: rgb(0, 0, 0);
-  margin-bottom: 20px;
+    padding: 5px;
+    margin: 0 5px;
+    background-color: rgb(42, 44, 42);
+    color: rgb(0, 0, 0);
+    margin-bottom: 20px;
 }
 
 .product-body {
-  padding: 20px;
+    padding: 20px;
 }
 
 .product-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  padding: 20px;
-  gap: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 20px;
+    gap: 40px;
 }
-  
+
 .product-item {
-  width: calc(25% - 10px);
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  border: 1px solid rgb(93, 92, 92);
-  width: 100%;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; 
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1); 
+    width: calc(25% - 10px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid rgb(93, 92, 92);
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
 }
 
 .product-item.zoom-in {
-  transform: scale(1.1);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
+    transform: scale(1.1);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
-
 .product-column {
-  margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .product-action {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
-.product-value{
-  text-align: center;
+.product-value {
+    text-align: center;
 }
 
 .product-action button {
-  background-color: rgb(22, 21, 21);
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
+    background-color: rgb(22, 21, 21);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 .product-action button:hover {
-  background-color: rgb(32, 31, 31);
+    background-color: rgb(32, 31, 31);
+}
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.pagination-button {
+    margin-bottom: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.pagination-button:hover svg path {
+    fill: #00c281;
 }
 
 @media screen and (max-width: 991px) {
-
-  .product-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 20px;
-    gap: 40px;
-  }
-
+    .product-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        padding: 20px;
+        gap: 40px;
+    }
 }
 
 @media screen and (max-width: 756px) {
+    .product-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+        gap: 40px;
+    }
 
-  .product-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    padding: 20px;
-    gap: 40px;
-  }
-
-  .header-controls{
-    grid-template-columns: repeat(2, 1fr);
-    padding: 20px;
-  }
-
+    .header-controls {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+    }
 }
 
 @media screen and (max-width: 450px) {
+    .product-row {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        padding: 20px;
+        gap: 40px;
+    }
 
-  .product-row {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    padding: 20px;
-    gap: 40px;
-  }
-
-  .header-controls{
-    grid-template-columns: repeat(1, 1fr);
-  }
-
+    .header-controls {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

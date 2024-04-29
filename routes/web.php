@@ -14,6 +14,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Update');
     });
 
+    Route::get('/create', function () {
+        return Inertia::render('Create');
+    });
+
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->middleware(['verified'])->name('dashboard');

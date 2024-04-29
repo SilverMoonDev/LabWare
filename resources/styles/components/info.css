@@ -23,9 +23,45 @@
     background-color: rgb(44, 42, 42);
     z-index: 999;
   }
+
+  .close{
+    display: flex;
+    justify-content: end;
+    cursor: pointer;
+  }
+
+  .close:hover svg path {
+    fill: #00c231;
+}
+
+  .popup-content h2{
+    color:#00c231;
+    font-size: 20px;
+    font-weight: bold;
+  }
   
   .popup-content {
-    padding: 20px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
   }
+
+  .popup-details{
+    padding: 20px;
+  }
+
+  .popup-details p{
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .popup-details span{
+    font-weight: 300;
+  }
+
+  .info-button:hover{
+    color:#00c231
+  }
+
+
   

@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import "../../styles/components/lateralMenu.css";
-import { PlusIcon } from "./PlusIcon";
-import { MinusIcon } from "./MinusIcon";
+import { PlusIcon } from "../Icons/PlusIcon";
+import { MinusIcon } from "../Icons/MinusIcon";
 
 export const LateralMenu = () => {
     const [showArmaris, setShowArmaris] = useState(false);

@@ -4,6 +4,8 @@ import { LateralMenu } from '../Components/LateralMenu';
 import { ItemInfo } from '../Components/ItemInfo';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import TextInput from '@/Components/TextInput';
+import { ArrowRightIcon } from '@/Icons/ArrowRightIcon';
+import { ArrowLeftIcon } from '@/Icons/ArrowBackIcon';
 
 
 const Main = ({ auth }) => {
@@ -12,7 +14,7 @@ const Main = ({ auth }) => {
   const [filteredList, setFilteredList] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     // Simulating fetching of product data from an API
@@ -23,11 +25,25 @@ const Main = ({ auth }) => {
         { name: 'Product 2', expire_date: "2024-04-14", quantitat: 400, numCas: "65-19-7" },
         { name: 'Product 3', expire_date: "2024-04-16", quantitat: 500, numCas: "66-19-7" },
         { name: 'Product 4', expire_date: "2024-04-13", quantitat: 200, numCas: "67-19-7" },
+        { name: 'Product 1', expire_date: "2024-04-15", quantitat: 100, numCas: "64-19-7" },
+        { name: 'Product 2', expire_date: "2024-04-14", quantitat: 400, numCas: "65-19-7" },
+        { name: 'Product 3', expire_date: "2024-04-16", quantitat: 500, numCas: "66-19-7" },
+        { name: 'Product 4', expire_date: "2024-04-13", quantitat: 200, numCas: "67-19-7" },
+        { name: 'Product 1', expire_date: "2024-04-15", quantitat: 100, numCas: "64-19-7" },
+        { name: 'Product 2', expire_date: "2024-04-14", quantitat: 400, numCas: "65-19-7" },
+        { name: 'Product 3', expire_date: "2024-04-16", quantitat: 500, numCas: "66-19-7" },
+        { name: 'Product 4', expire_date: "2024-04-13", quantitat: 200, numCas: "67-19-7" },
+        { name: 'Product 1', expire_date: "2024-04-15", quantitat: 100, numCas: "64-19-7" },
+        { name: 'Product 2', expire_date: "2024-04-14", quantitat: 400, numCas: "65-19-7" },
+        { name: 'Product 3', expire_date: "2024-04-16", quantitat: 500, numCas: "66-19-7" },
+        { name: 'Product 4', expire_date: "2024-04-13", quantitat: 200, numCas: "67-19-7" },
       ];
       setProductList(products);
     };
     fetchProducts();
   }, []);
+
+  const productsPerPage = 10;
 
   const columns = [
     { label: 'Name', property: 'name' },
@@ -91,11 +107,26 @@ const Main = ({ auth }) => {
     return filteredProducts;
   }, [filteredList, handleSorting]);
 
+  // Calculate the range of indices for the current page
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const endIndex = Math.min(startIndex + productsPerPage, filteredProducts.length);
+
+  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
   const openPopup = (product) => {
     setSelectedProduct(product);
     setPopupOpen(true);
   };
 
+  // Function to handle navigation to the previous page
+  const goToPreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  // Function to handle navigation to the next page
+  const goToNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(filteredProducts.length / productsPerPage)));
+  };
 
   return (
     <AuthenticatedLayout
@@ -107,19 +138,19 @@ const Main = ({ auth }) => {
         <section className='product-container'>
           <header>
             <div className='header-controls'>
-              <button onClick={() => sortByColumn('name')}>
-                {sortedList.property === 'name' ? (sortedList.descending ? 'Sort by name (Descending)' : 'Sort by name') : 'Sort by name'}
+              <button onClick={() => sortByColumn('name')} style={{ color: sortedList.property === 'name' ? (sortedList.descending ? "#ffffff" : "#48bb78") : "#ffffff" }}>
+              {sortedList.property === 'name' ? (sortedList.descending ? 'Sort by name (A)' : 'Sort by name (D)' ) : 'Sort by name (A)'}
               </button>
-              <button onClick={() => sortByColumn('expire_date')}>
-                {sortedList.property === 'expire_date' ? (sortedList.descending ? 'Sort by expire date (Descending)' : 'Sort by expire date') : 'Sort by expire date'}
+              <button onClick={() => sortByColumn('expire_date')} style={{ color: sortedList.property === 'expire_date' ? (sortedList.descending ? "#ffffff" : "#48bb78") : "#ffffff" }}>
+              {sortedList.property === 'expire_date' ? (sortedList.descending ? 'Sort by expire date (A)' : 'Sort by expire date (D)') : 'Sort by expire date (A)'}
               </button>
               <TextInput type="text" placeholder="Filter List" value={filteredList} onChange={e => setFilteredList(e.target.value)} />
             </div>
           </header>
           <div className='product-body'>
-            {productList && (
+            {paginatedProducts && (
               <div className='product-row'>
-                {filteredProducts.map((product, index) => (
+                {paginatedProducts.map((product, index) => (
                   <div key={index} className='product-item' onClick={() => openPopup(product)}
                     onMouseEnter={(e) => e.currentTarget.classList.add('zoom-in')}
                     onMouseLeave={(e) => e.currentTarget.classList.remove('zoom-in')}>
@@ -130,6 +161,11 @@ const Main = ({ auth }) => {
                 ))}
               </div>
             )}
+          </div>
+          <div className="pagination">
+            <button onClick={goToPreviousPage} disabled={currentPage === 1} className="pagination-button"><ArrowLeftIcon /></button>
+            <span>{currentPage}</span>
+            <button onClick={goToNextPage} disabled={currentPage === Math.ceil(filteredProducts.length / productsPerPage)} className="pagination-button"><ArrowRightIcon /></button>
           </div>
         </section>
         {popupOpen && <ItemInfo product={selectedProduct} onClose={() => setPopupOpen(false)} handleDelete={handleDelete} />}
