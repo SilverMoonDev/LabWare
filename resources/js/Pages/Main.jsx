@@ -148,7 +148,7 @@ const Main = ({ auth, products }) => {
             <button onClick={goToNextPage} disabled={currentPage === Math.ceil(filteredProducts.length / productsPerPage)} className="pagination-button"><ArrowRightIcon /></button>
           </div>
         </section>
-        {popupOpen && <ItemInfo product={selectedProduct} onClose={() => setPopupOpen(false)} handleDelete={handleDelete} />}
+        {popupOpen && <ItemInfo user={auth.user} product={selectedProduct} onClose={() => setPopupOpen(false)} handleDelete={handleDelete} />}
       </div>
     </AuthenticatedLayout>
   );

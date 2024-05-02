@@ -25,10 +25,10 @@ const Create = ({ auth, status }) => {
     return (
         <AuthenticatedLayout
           user={auth.user}
-          header={<h2 className="font-semibold text-xl text-white leading-tight">Create</h2>}
+          header={<h2 className="font-semibold text-xl text-white leading-tight">Crear</h2>}
         >
           <div className="max-w-md mx-auto mt-6">
-            <h2 className="text-2xl font-semibold text-white mb-4 text-center">Create</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4 text-center">Crear</h2>
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
             <form onSubmit={submit}>
               <div className="mb-4">
@@ -105,7 +105,7 @@ const Create = ({ auth, status }) => {
                 <InputError message={errors.quantity} className="mt-2 text-red-500" />
               </div>
               <PrimaryButton disabled={processing} className="ms-4">
-                Create
+                Crear
               </PrimaryButton>
             </form>
           </div>
