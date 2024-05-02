@@ -7,8 +7,7 @@ import TextInput from '@/Components/TextInput';
 import { ArrowRightIcon } from '@/Icons/ArrowRightIcon';
 import { ArrowLeftIcon } from '@/Icons/ArrowBackIcon';
 
-
-const Main = ({ auth }) => {
+const Main = ({ auth, products }) => {
   const [productList, setProductList] = useState([]);
   const [sortedList, setSortedList] = useState({ property: '', descending: false });
   const [filteredList, setFilteredList] = useState('');
@@ -17,33 +16,14 @@ const Main = ({ auth }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    // Simulating fetching of product data from an API
     const fetchProducts = async () => {
-      // Mocked product data
-      const products = [
-        { name: 'Product 1', expire_date: "2024-04-15", quantitat: 100, numCas: "64-19-7" },
-        { name: 'Product 2', expire_date: "2024-04-14", quantitat: 400, numCas: "65-19-7" },
-        { name: 'Product 3', expire_date: "2024-04-16", quantitat: 500, numCas: "66-19-7" },
-        { name: 'Product 4', expire_date: "2024-04-13", quantitat: 200, numCas: "67-19-7" },
-        { name: 'Product 1', expire_date: "2024-04-15", quantitat: 100, numCas: "64-19-7" },
-        { name: 'Product 2', expire_date: "2024-04-14", quantitat: 400, numCas: "65-19-7" },
-        { name: 'Product 3', expire_date: "2024-04-16", quantitat: 500, numCas: "66-19-7" },
-        { name: 'Product 4', expire_date: "2024-04-13", quantitat: 200, numCas: "67-19-7" },
-        { name: 'Product 1', expire_date: "2024-04-15", quantitat: 100, numCas: "64-19-7" },
-        { name: 'Product 2', expire_date: "2024-04-14", quantitat: 400, numCas: "65-19-7" },
-        { name: 'Product 3', expire_date: "2024-04-16", quantitat: 500, numCas: "66-19-7" },
-        { name: 'Product 4', expire_date: "2024-04-13", quantitat: 200, numCas: "67-19-7" },
-        { name: 'Product 1', expire_date: "2024-04-15", quantitat: 100, numCas: "64-19-7" },
-        { name: 'Product 2', expire_date: "2024-04-14", quantitat: 400, numCas: "65-19-7" },
-        { name: 'Product 3', expire_date: "2024-04-16", quantitat: 500, numCas: "66-19-7" },
-        { name: 'Product 4', expire_date: "2024-04-13", quantitat: 200, numCas: "67-19-7" },
-      ];
-      setProductList(products);
+        if (products)
+            setProductList(products);
     };
     fetchProducts();
   }, []);
 
-  const productsPerPage = 10;
+  const productsPerPage = 12;
 
   const columns = [
     { label: 'Name', property: 'name' },
@@ -87,10 +67,10 @@ const Main = ({ auth }) => {
   };
 
   // Function to handle deletion of a product with the given name
-  const handleDelete = (name) => {
-    // Filter out the product with the provided name from the productList
-    const updatedProductList = productList.filter((product) => product.name !== name);
-    setProductList(updatedProductList);
+  const handleDelete = (id) => {
+    fetch(route('products.destroy', id), {
+        method: 'DELETE'
+      })
   };
 
   // Memoized function to filter the productList based on filtering criteria and sorted list
@@ -139,12 +119,12 @@ const Main = ({ auth }) => {
           <header>
             <div className='header-controls'>
               <button onClick={() => sortByColumn('name')} style={{ color: sortedList.property === 'name' ? (sortedList.descending ? "#ffffff" : "#48bb78") : "#ffffff" }}>
-              {sortedList.property === 'name' ? (sortedList.descending ? 'Sort by name (A)' : 'Sort by name (D)' ) : 'Sort by name (A)'}
+              {sortedList.property === 'name' ? (sortedList.descending ? 'Ordenar per nom (D)' : 'Ordenar per nom (A)' ) : 'Ordenar per nom'}
               </button>
               <button onClick={() => sortByColumn('expire_date')} style={{ color: sortedList.property === 'expire_date' ? (sortedList.descending ? "#ffffff" : "#48bb78") : "#ffffff" }}>
-              {sortedList.property === 'expire_date' ? (sortedList.descending ? 'Sort by expire date (A)' : 'Sort by expire date (D)') : 'Sort by expire date (A)'}
+              {sortedList.property === 'expire_date' ? (sortedList.descending ? 'Ordenar per data d\'expiració (D)' : 'Ordenar per data d\'expiració (A)') : 'Ordenar per data d\'expiració'}
               </button>
-              <TextInput type="text" placeholder="Filter List" value={filteredList} onChange={e => setFilteredList(e.target.value)} />
+              <TextInput type="text" placeholder="Buscar" value={filteredList} onChange={e => setFilteredList(e.target.value)} />
             </div>
           </header>
           <div className='product-body'>

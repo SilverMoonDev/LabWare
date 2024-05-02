@@ -7,19 +7,21 @@ import { useForm } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-const Update = ({ auth, status }) => {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        casNumber: '',
-        productName: '',
-        quantity: '',
-        expiryDate: ''
+const Update = ({ auth, status, product }) => {
+    const { data, setData, put, processing, errors, reset } = useForm({
+        cas_number: product.cas_number,
+        name: product.name,
+        ml: product.ml,
+        concentration: product.concentration,
+        expire_date: product.expire_date,
+        cabinet: product.cabinet
     });
 
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('update'));
-    };
+        put(route('products.update', product.id));
+      };
 
     return (
         <AuthenticatedLayout
@@ -30,59 +32,79 @@ const Update = ({ auth, status }) => {
                 <h2 className="text-2xl font-semibold text-white mb-4 text-center">Update</h2>
                 {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
                 <form onSubmit={submit}>
-                    <div className="mb-4">
-                        <InputLabel htmlFor="casNumber" value="CasNumber" children={undefined} />
-                        <TextInput
-                            id="casNumber"
-                            type="text"
-                            name="casNumber"
-                            value={data.casNumber}
-                            autoComplete="username"
-                            isFocused={true}
-                            onChange={(e) => setData('casNumber', e.target.value)}
-                            className="mt-1 block w-full text-black"
-                        />
-                        <InputError message={errors.casNumber} className="mt-2 text-red-500" />
-                    </div>
-                    <div className="mb-4">
-                        <InputLabel htmlFor="productName" value="Product" children={undefined} />
-                        <TextInput
-                            id="productName"
-                            type="text"
-                            name="productName"
-                            value={data.productName}
-                            autoComplete="productName"
-                            onChange={(e) => setData('productName', e.target.value)}
-                            className="mt-1 block w-full text-black"
-                        />
-                        <InputError message={errors.productName} className="mt-2 text-red-500" />
-                    </div>
-                    <div className="mb-4">
-                        <InputLabel htmlFor="quantity" value="Quantity" children={undefined} />
-                        <TextInput
-                            id="quantity"
-                            type="number"
-                            name="quantity"
-                            value={data.quantity}
-                            autoComplete="quantity"
-                            onChange={(e) => setData('quantity', e.target.value)}
-                            className="mt-1 block w-full text-black"
-                        />
-                        <InputError message={errors.quantity} className="mt-2 text-red-500" />
-                    </div>
-                    <div className="mb-4">
-                        <InputLabel htmlFor="expiryDate" value="Expiry Date" children={undefined} />
-                        <TextInput
-                            id="expiryDate"
-                            type="date"
-                            name="expiryDate"
-                            value={data.expiryDate}
-                            autoComplete="expiryDate"
-                            onChange={(e) => setData('expiryDate', e.target.value)}
-                            className="mt-1 block w-full text-black"
-                        />
-                        <InputError message={errors.expiryDate} className="mt-2 text-red-500" />
-                    </div>
+                <div className="mb-4">
+                <InputLabel htmlFor="cas_number" value="Numero Cas" children={undefined} />
+                <TextInput
+                  id="cas_number"
+                  type="text"
+                  name="cas_number"
+                  value={data.cas_number}
+                  isFocused={true}
+                  onChange={(e) => setData('cas_number', e.target.value)}
+                  className="mt-1 block w-full text-black"
+                />
+                <InputError message={errors.casNumber} className="mt-2 text-red-500" />
+              </div>
+              <div className="mb-4">
+                <InputLabel htmlFor="name" value="Nom" children={undefined} />
+                <TextInput
+                  id="name"
+                  type="text"
+                  name="name"
+                  value={data.name}
+                  onChange={(e) => setData('name', e.target.value)}
+                  className="mt-1 block w-full text-black"
+                />
+                <InputError message={errors.productName} className="mt-2 text-red-500" />
+              </div>
+              <div className="mb-4">
+                <InputLabel htmlFor="ml" value="Quantitat (ml)" children={undefined} />
+                <TextInput
+                  id="ml"
+                  type="number"
+                  name="ml"
+                  value={data.ml}
+                  onChange={(e) => setData('ml', e.target.value)}
+                  className="mt-1 block w-full text-black"
+                />
+                <InputError message={errors.quantity} className="mt-2 text-red-500" />
+              </div>
+              <div className="mb-4">
+                <InputLabel htmlFor="quantity" value="Concentració" children={undefined} />
+                <TextInput
+                  id="concentration"
+                  type="number"
+                  name="concentration"
+                  value={data.concentration}
+                  onChange={(e) => setData('concentration', e.target.value)}
+                  className="mt-1 block w-full text-black"
+                />
+                <InputError message={errors.quantity} className="mt-2 text-red-500" />
+              </div>
+              <div className="mb-4">
+                <InputLabel htmlFor="expire_date" value="Data d'expiració" children={undefined} />
+                <TextInput
+                  id="expire_date"
+                  type="date"
+                  name="expire_date"
+                  value={data.expire_date}
+                  onChange={(e) => setData('expire_date', e.target.value)}
+                  className="mt-1 block w-full text-black"
+                />
+                <InputError message={errors.expiryDate} className="mt-2 text-red-500" />
+              </div>
+              <div className="mb-4">
+                <InputLabel htmlFor="cabinet" value="Armari" children={undefined} />
+                <TextInput
+                  id="cabinet"
+                  type="text"
+                  name="cabinet"
+                  value={data.cabinet}
+                  onChange={(e) => setData('cabinet', e.target.value)}
+                  className="mt-1 block w-full text-black"
+                />
+                <InputError message={errors.quantity} className="mt-2 text-red-500" />
+              </div>
                     <PrimaryButton disabled={processing} className="ms-4 bg-blue-600 hover:bg-blue-800 focus:bg-blue-800 active:bg-blue-900 !important">
                         Update
                     </PrimaryButton>

@@ -13,15 +13,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Main');
+        $products = Product::all();
+        return Inertia::render('Main', [
+            'products' => $products
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return Inertia::render('Create');
     }
 
     /**
@@ -29,15 +29,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        //
+        Product::create($request->all());
+        return redirect()->route('products.index');
     }
 
     /**
@@ -45,7 +38,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return Inertia::render('Update', ['product' => $product]);
     }
 
     /**
@@ -53,7 +46,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product->update($request->all());
+        return redirect()->route('products.index');
     }
 
     /**
@@ -61,6 +55,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        dd($product);
+        $product->delete();
     }
 }

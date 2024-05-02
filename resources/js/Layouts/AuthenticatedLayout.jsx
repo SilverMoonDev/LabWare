@@ -3,7 +3,6 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -19,12 +18,12 @@ export default function Authenticated({ user, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href='/' active={route().current('/')}>
+                                <NavLink href={route('products.index')}>
                                     Home
                                 </NavLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href='/create' active={route().current('create')}>
+                                <NavLink href={route('products.create')} >
                                     Create
                                 </NavLink>
                             </div>
@@ -95,12 +94,12 @@ export default function Authenticated({ user, header, children }) {
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href='/' active={route().current('/')}>
+                        <ResponsiveNavLink href={route('products.index')}>
                             Home
                         </ResponsiveNavLink>
                     </div>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href='/create' active={route().current('create')}>
+                        <ResponsiveNavLink href={route('products.create')}>
                             Create
                         </ResponsiveNavLink>
                     </div>
