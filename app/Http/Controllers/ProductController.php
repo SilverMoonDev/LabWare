@@ -24,6 +24,11 @@ class ProductController extends Controller
         return Inertia::render('Create');
     }
 
+    public function show()
+    {
+        return redirect()->route('products.index');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -55,7 +60,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        dd($product);
         $product->delete();
     }
 }
