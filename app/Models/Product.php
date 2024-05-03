@@ -15,6 +15,7 @@ class Product extends Model
         'ml',
         'concentration',
         'expire_date',
-        'cabinet'
+        'cabinet',
+        'history'
     ];
 }

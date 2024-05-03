@@ -13,17 +13,21 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
 
     const { data, put, processing, errors } = useForm({
         ml: product.ml,
+        history: product.history,
     });
 
     const [extractedMl, setExtractedMl] = useState(product.ml);
     const [showMessage, setShowMessage] = useState(false);
     const [popupOpen, setPopupOpen] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const submit = (e) => {
         e.preventDefault();
         if (data.ml >= extractedMl) {
             data.ml = product.ml - extractedMl;
+            if (!data.history) //Filtrar el valor per defecte
+                data.history = `${user.name} ha agafat ${extractedMl} ml` + ":"; //Separarat per dos punts
+            else
+                data.history += `${user.name} ha agafat ${extractedMl} ml` + ":"; //Separarat per dos punts
 
             put(route("products.update", product.id), {
                 onSuccess: () => {
@@ -33,8 +37,7 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
         }
     };
 
-    const openPopup = (product) => {
-      setSelectedProduct(product);
+    const openPopup = () => {
       setPopupOpen(true);
     };
 
@@ -116,12 +119,12 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
                     {showMessage && (
                         <div className="message">
                             <p>
-                                Has agafat: {extractedMl} ml
+                                Has agafat {extractedMl} ml
                             </p>
                         </div>
                     )}
                 </div>
-                {popupOpen && <LogList messages={product.history} onClose={() => setPopupOpen(false)} />}
+                {popupOpen && <LogList messages={data.history} onClose={() => setPopupOpen()} />}
             </section>
         </>
     );

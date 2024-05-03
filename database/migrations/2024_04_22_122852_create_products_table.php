@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('ml');
             $table->date('expire_date')->nullable();
             $table->string('cabinet');
+            $table->string('history')->nullable();
             $table->timestamps();
         });
     }
