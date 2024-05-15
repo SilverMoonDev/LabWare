@@ -8,28 +8,40 @@ import { useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { LogList } from "./LogList";
 
-export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
-    if (!product) return null;
+export const ItemInfo = ({
+    user,
+    product: products,
+    onClose,
+    handleDelete,
+}) => {
+    if (!products) return null;
+
+    const [displayedProduct, setDisplayedProduct] = useState(
+        products.products[0]
+    );
 
     const { data, put, processing, errors } = useForm({
-        ml: product.ml,
-        history: product.history,
+        ml: displayedProduct.ml,
+        history: displayedProduct.history,
     });
 
-    const [extractedMl, setExtractedMl] = useState(product.ml);
+    const [extractedMl, setExtractedMl] = useState(products.ml);
     const [showMessage, setShowMessage] = useState(false);
     const [popupOpen, setPopupOpen] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
 
     const submit = (e) => {
         e.preventDefault();
         if (data.ml >= extractedMl) {
-            data.ml = product.ml - extractedMl;
-            if (!data.history) //Filtrar el valor per defecte
-                data.history = `${user.name} ha agafat ${extractedMl} ml` + ":"; //Separarat per dos punts
+            data.ml = displayedProduct.ml - extractedMl;
+            if (!data.history)
+                data.history = `${user.name} ha agafat ${extractedMl} ml` + ":";
             else
-                data.history += `${user.name} ha agafat ${extractedMl} ml` + ":"; //Separarat per dos punts
+                data.history +=
+                    `${user.name} ha agafat ${extractedMl} ml` + ":";
 
-            put(route("products.update", product.id), {
+            put(route("products.update", displayedProduct.id), {
                 onSuccess: () => {
                     setShowMessage(true);
                 },
@@ -38,7 +50,7 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
     };
 
     const openPopup = () => {
-      setPopupOpen(true);
+        setPopupOpen(true);
     };
 
     return (
@@ -50,34 +62,64 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
                 </div>
                 <div className="popup-content">
                     <h2>Producte</h2>
-                    <div className="popup-details">
-                        <p>
-                            Num Cas: <span>{product.cas_number}</span>
-                        </p>
-                        <p>
-                            Nom: <span>{product.name}</span>
-                        </p>
-                        <p>
-                            Quantitat: <span>{data.ml} ml</span>
-                        </p>
-                        <p>
-                            Concentració: <span>{product.concentration} %</span>
-                        </p>
-                        <p>
-                            Data d'Expiració: <span>{product.expire_date}</span>
-                        </p>
-                        <p>
-                            Armari: <span>{product.cabinet}</span>
-                        </p>
+                    <div className="details">
+                        <div className="left-details">
+                            <p>
+                                Num Cas: <span>{displayedProduct.cas_number}</span>
+                            </p>
+                            <p>
+                                Nom: <span>{displayedProduct.name}</span>
+                            </p>
+                            <p>
+                                Quantitat: <span>{data.ml} ml</span>
+                            </p>
+                            <p>
+                                Concentració:{" "}
+                                <span>{displayedProduct.concentration} %</span>
+                            </p>
+                            <p>
+                                Data d'Expiració:{" "}
+                                <span>{displayedProduct.expire_date}</span>
+                            </p>
+                            <p>
+                                Armari: <span>{displayedProduct.cabinet}</span>
+                            </p>
+                        </div>
+                        <div className="details-button">
+                            {products.products.map((product, index) => (
+                                <div key={index}>
+                                    <button
+                                    style={{
+                                        color:
+                                            index === selectedIndex
+                                                ? "#48bb78"
+                                                : "#ffffff",
+                                    }}
+                                    className="info-button"
+                                    onClick={() => {
+                                        setSelectedIndex(index);
+                                        setDisplayedProduct(product);
+                                        setData('ml', product.ml);
+                                        setData('history', product.history);
+                                    }}
+                                >
+                                    <span>
+                                        {`${product.ml}ml`}<br />{`${product.expire_date}`}
+                                    </span>
+                                </button>
+                                </div>
+                            ))}
+                        </div>
                     </div>
+
                     <div className="popup-buttons">
-                        <a href={`/products/${product.id}/edit`}>
+                        <a href={`/products/${products.id}/edit`}>
                             <button className="info-button">Editar</button>
                         </a>
                         <button
                             className="info-button"
                             onClick={() => {
-                                handleDelete(product.id);
+                                handleDelete(products.id);
                                 onClose();
                             }}
                         >
@@ -85,7 +127,7 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
                         </button>
                         <button
                             className="info-button"
-                            onClick={() => openPopup(product)}
+                            onClick={() => openPopup(products)}
                         >
                             Historial del Producte
                         </button>
@@ -118,13 +160,16 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
                     </div>
                     {showMessage && (
                         <div className="message">
-                            <p>
-                                Has agafat {extractedMl} ml
-                            </p>
+                            <p>Has agafat {extractedMl} ml</p>
                         </div>
                     )}
                 </div>
-                {popupOpen && <LogList messages={data.history} onClose={() => setPopupOpen()} />}
+                {popupOpen && (
+                    <LogList
+                        messages={data.history}
+                        onClose={() => setPopupOpen()}
+                    />
+                )}
             </section>
         </>
     );

@@ -46,18 +46,30 @@
     flex-direction: column;
   }
 
-  .popup-details{
+  .left-details{
     padding: 20px;
   }
 
-  .popup-details p{
+  .left-details p{
     margin-bottom: 5px;
     font-weight: bold;
   }
 
-  .popup-details span{
+  .left-details span{
     font-weight: 300;
   }
+
+  .details{
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+  .details-button{
+    margin-right: 3rem;
+  }
+
+
 
   .info-button:hover{
     color:#00c231

@@ -19,9 +19,28 @@ const Main = ({ auth, products }) => {
     const [popupOpen, setPopupOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
+
     useEffect(() => {
         const fetchProducts = async () => {
-            if (products) setProductList(products);
+            if (products) {
+                var organizedProducts = []
+                products.forEach(product => {
+                    let casObject = organizedProducts.find(obj =>
+                        obj.CAS_NUMBER === product.cas_number && obj.CONCENTRATION === product.concentration
+                    );
+                    if (casObject) {
+                        casObject.products.push(product);
+                    } else {
+                        organizedProducts.push({
+                            name: product.name,
+                            CONCENTRATION: product.concentration,
+                            CAS_NUMBER: product.cas_number,
+                            products: [product]
+                        });
+                    }
+                });
+                setProductList(organizedProducts);
+            }
         };
         fetchProducts();
     }, []);
@@ -205,7 +224,8 @@ const Main = ({ auth, products }) => {
                                     >
                                         <div className="product-column">
                                             <div className="product-value">
-                                                {product.name}
+                                                <span>{`${product.name}`} <br/> {`${product.CONCENTRATION}%`}</span>
+                                                
                                             </div>
                                         </div>
                                     </div>
