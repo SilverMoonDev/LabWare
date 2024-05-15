@@ -30,7 +30,6 @@ export const ItemInfo = ({
     const [popupOpen, setPopupOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
-
     const submit = (e) => {
         e.preventDefault();
         if (data.ml >= extractedMl) {
@@ -65,7 +64,8 @@ export const ItemInfo = ({
                     <div className="details">
                         <div className="left-details">
                             <p>
-                                Num Cas: <span>{displayedProduct.cas_number}</span>
+                                Num Cas:{" "}
+                                <span>{displayedProduct.cas_number}</span>
                             </p>
                             <p>
                                 Nom: <span>{displayedProduct.name}</span>
@@ -89,42 +89,48 @@ export const ItemInfo = ({
                             {products.products.map((product, index) => (
                                 <div key={index}>
                                     <button
-                                    style={{
-                                        color:
-                                            index === selectedIndex
-                                                ? "#48bb78"
-                                                : "#ffffff",
-                                    }}
-                                    className="info-button"
-                                    onClick={() => {
-                                        setSelectedIndex(index);
-                                        setDisplayedProduct(product);
-                                        setData('ml', product.ml);
-                                        setData('history', product.history);
-                                    }}
-                                >
-                                    <span>
-                                        {`${product.ml}ml`}<br />{`${product.expire_date}`}
-                                    </span>
-                                </button>
+                                        style={{
+                                            color:
+                                                index === selectedIndex
+                                                    ? "#48bb78"
+                                                    : "#ffffff",
+                                        }}
+                                        className="info-button"
+                                        onClick={() => {
+                                            setSelectedIndex(index);
+                                            setDisplayedProduct(product);
+                                            setData("ml", product.ml);
+                                            setData("history", product.history);
+                                        }}
+                                    >
+                                        <span>
+                                            {`${product.ml}ml`}
+                                            <br />
+                                            {`${product.expire_date}`}
+                                        </span>
+                                    </button>
                                 </div>
                             ))}
                         </div>
                     </div>
 
                     <div className="popup-buttons">
-                        <a href={`/products/${products.id}/edit`}>
-                            <button className="info-button">Editar</button>
-                        </a>
-                        <button
-                            className="info-button"
-                            onClick={() => {
-                                handleDelete(products.id);
-                                onClose();
-                            }}
-                        >
-                            Eliminar
-                        </button>
+                        {user.admin === 1 && (
+                            <a href={`/products/${products.id}/edit`}>
+                                <button className="info-button">Editar</button>
+                            </a>
+                        )}
+                        {user.admin === 1 && (
+                            <button
+                                className="info-button"
+                                onClick={() => {
+                                    handleDelete(products.id);
+                                    onClose();
+                                }}
+                            >
+                                Eliminar
+                            </button>
+                        )}
                         <button
                             className="info-button"
                             onClick={() => openPopup(products)}
