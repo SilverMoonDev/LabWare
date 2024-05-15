@@ -76,7 +76,7 @@ const Update = ({ auth, status, product }) => {
                   type="number"
                   name="concentration"
                   value={data.concentration}
-                  onChange={(e) => setData('concentration', e.target.value)}
+                  onChange={(e) => setData('concentration', Math.min(Math.max(parseInt(e.target.value), 0), 100))}
                   className="mt-1 block w-full text-black"
                 />
                 <InputError message={errors.quantity} className="mt-2 text-red-500" />
