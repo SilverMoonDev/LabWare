@@ -18,6 +18,7 @@ export const LogList = ({ messages, onClose }) => {
     }
 
     return (
+        <>
         <section className="popup-log">
             <div className="close" onClick={onClose}>
                 <CloseIcon />
@@ -28,5 +29,6 @@ export const LogList = ({ messages, onClose }) => {
                 </div>
             ))}
         </section>
+        </>
     );
 };
