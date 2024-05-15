@@ -24,10 +24,14 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
         e.preventDefault();
         if (data.ml >= extractedMl) {
             data.ml = product.ml - extractedMl;
-            if (!data.history) //Filtrar el valor per defecte
-                data.history = `${user.name} ha agafat ${extractedMl} ml` + ":"; //Separarat per dos punts
+            if (!data.history)
+                //Filtrar el valor per defecte
+                data.history =
+                    `${user.name} ha agafat ${extractedMl} ml` +
+                    ":"; //Separarat per dos punts
             else
-                data.history += `${user.name} ha agafat ${extractedMl} ml` + ":"; //Separarat per dos punts
+                data.history +=
+                    `${user.name} ha agafat ${extractedMl} ml` + ":"; //Separarat per dos punts
 
             put(route("products.update", product.id), {
                 onSuccess: () => {
@@ -38,7 +42,7 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
     };
 
     const openPopup = () => {
-      setPopupOpen(true);
+        setPopupOpen(true);
     };
 
     return (
@@ -71,18 +75,22 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
                         </p>
                     </div>
                     <div className="popup-buttons">
-                        <a href={`/products/${product.id}/edit`}>
-                            <button className="info-button">Editar</button>
-                        </a>
-                        <button
-                            className="info-button"
-                            onClick={() => {
-                                handleDelete(product.id);
-                                onClose();
-                            }}
-                        >
-                            Eliminar
-                        </button>
+                        {user.admin === 1 && (
+                            <a href={`/products/${product.id}/edit`}>
+                                <button className="info-button">Editar</button>
+                            </a>
+                        )}
+                        {user.admin === 1 && (
+                            <button
+                                className="info-button"
+                                onClick={() => {
+                                    handleDelete(product.id);
+                                    onClose();
+                                }}
+                            >
+                                Eliminar
+                            </button>
+                        )}
                         <button
                             className="info-button"
                             onClick={() => openPopup(product)}
@@ -118,13 +126,16 @@ export const ItemInfo = ({ user, product, onClose, handleDelete }) => {
                     </div>
                     {showMessage && (
                         <div className="message">
-                            <p>
-                                Has agafat {extractedMl} ml
-                            </p>
+                            <p>Has agafat {extractedMl} ml</p>
                         </div>
                     )}
                 </div>
-                {popupOpen && <LogList messages={data.history} onClose={() => setPopupOpen()} />}
+                {popupOpen && (
+                    <LogList
+                        messages={data.history}
+                        onClose={() => setPopupOpen()}
+                    />
+                )}
             </section>
         </>
     );
